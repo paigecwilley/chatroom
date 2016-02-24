@@ -6,7 +6,6 @@ app.service('parseService', function($http){
   //On the lines below create a getData method. This method will retrieve data from the parse backend.
   //The url for the get request should be 'https://api.parse.com/1/classes/chat?order=-createdAt'
   //Be sure to return whatever gets returned from $http so you can call .then in your controller.
- 
 
 
   //On the line below create the postData method. This method will add data to the parse backend.
@@ -17,6 +16,32 @@ app.service('parseService', function($http){
   
   //postData method here
   
+  this.postData = function(messages)
+  {
+    $http({
+      method: 'POST',
+      url: baseUrl,
+      data: {text: messages}
+    })
+    .catch(function(err){
+      console.log('Here is an errrrrr', err);
+    })
+  };
   
-  //getData method here
+  //getData method here 
+  
+var baseUrl = 'https://api.parse.com/1/classes/chat';
+  this.getData = function()
+{
+  return $http({
+    method: 'GET',
+    url: baseUrl + '?order=-createdAt',
+  })
+  .then(function(response){
+    return response.data;
+  })
+  .catch(function(err){
+    console.error('error getting things from getter', err)
+  })
+}
 });
